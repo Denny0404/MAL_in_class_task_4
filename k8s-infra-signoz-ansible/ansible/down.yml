@@ -1,0 +1,14 @@
+- name: Uninstall SigNoz k8s-infra
+  hosts: k8s_control
+  become: yes
+  vars:
+    release_name: "{{ release_name | default('k8s-infra') }}"
+    namespace: "{{ namespace | default('signoz-infra') }}"
+  tasks:
+    - name: Helm uninstall (ignore if not present)
+      ansible.builtin.shell: "helm uninstall {{ release_name }} -n {{ namespace }} || true"
+      args: { executable: /bin/bash }
+
+    - name: Delete namespace (optional)
+      ansible.builtin.shell: "kubectl delete ns {{ namespace }} --ignore-not-found=true"
+      args: { executable: /bin/bash }
