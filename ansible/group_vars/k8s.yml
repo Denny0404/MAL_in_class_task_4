@@ -1,8 +1,0 @@
-otel_host: "10.172.27.3"
-otel_port: 4317
-otel_insecure: true
-signoz_namespace: "signoz-infra"
-release_name: "k8s-infra"
-cluster_name: "vsphere-class"
-deploy_rolldice: true
-apps_namespace: "demo"
