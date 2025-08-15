@@ -1,4 +1,3 @@
-# Default variables (override with -e on the CLI if needed)
 otel_host: "10.172.27.3"
 otel_port: 4317
 otel_insecure: true

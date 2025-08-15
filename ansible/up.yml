@@ -39,7 +39,9 @@
 
     - name: Install/Upgrade k8s-infra
       shell: |
-        helm upgrade --install {{ release_name }} signoz/k8s-infra               -n {{ signoz_namespace }} --create-namespace               -f /opt/signoz/override-values.yaml
+        helm upgrade --install {{ release_name }} signoz/k8s-infra \
+          -n {{ signoz_namespace }} --create-namespace \
+          -f /opt/signoz/override-values.yaml
       args:
         executable: /bin/bash
 
@@ -126,7 +128,10 @@
                         command: ["/bin/sh","-c"]
                         args:
                           - |
-                            pip install --no-cache-dir flask opentelemetry-distro opentelemetry-instrumentation-flask opentelemetry-exporter-otlp &&                                 opentelemetry-bootstrap -a install &&                                 OTEL_TRACES_EXPORTER=otlp OTEL_METRICS_EXPORTER=otlp OTEL_LOGS_EXPORTER=otlp                                 opentelemetry-instrument --service_name=rolldice python /app/app.py
+                            pip install --no-cache-dir flask opentelemetry-distro opentelemetry-instrumentation-flask opentelemetry-exporter-otlp && \
+                            opentelemetry-bootstrap -a install && \
+                            OTEL_TRACES_EXPORTER=otlp OTEL_METRICS_EXPORTER=otlp OTEL_LOGS_EXPORTER=otlp \
+                            opentelemetry-instrument --service_name=rolldice python /app/app.py
                         volumeMounts:
                           - name: app
                             mountPath: /app
@@ -151,4 +156,3 @@
           shell: kubectl apply -f /opt/signoz/rolldice.yaml
           args:
             executable: /bin/bash
-

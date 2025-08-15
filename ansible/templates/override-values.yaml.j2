@@ -3,11 +3,9 @@ global:
   clusterName: "{{ cluster_name }}"
   deploymentEnvironment: "class"
 
-# Upstream SigNoz Collector (TrueNAS)
 otelCollectorEndpoint: "{{ otel_host }}:{{ otel_port }}"
 otelInsecure: {{ 'true' if otel_insecure else 'false' }}
 
-# Enable useful presets
 presets:
   otlpExporter:
     enabled: true
