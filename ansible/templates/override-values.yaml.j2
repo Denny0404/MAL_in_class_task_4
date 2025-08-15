@@ -1,0 +1,27 @@
+global:
+  cloud: others
+  clusterName: "{{ cluster_name }}"
+  deploymentEnvironment: "class"
+
+# Upstream SigNoz Collector (TrueNAS)
+otelCollectorEndpoint: "{{ otel_host }}:{{ otel_port }}"
+otelInsecure: {{ 'true' if otel_insecure else 'false' }}
+
+# Enable useful presets
+presets:
+  otlpExporter:
+    enabled: true
+  loggingExporter:
+    enabled: false
+  logsCollection:
+    enabled: true
+  hostMetrics:
+    enabled: true
+  kubeletMetrics:
+    enabled: true
+  kubernetesAttributes:
+    enabled: true
+  clusterMetrics:
+    enabled: true
+  k8sEvents:
+    enabled: true

@@ -1,0 +1,20 @@
+---
+- name: Ensure Helm is installed
+  become: yes
+  shell: |
+    set -e
+    if ! command -v helm >/dev/null 2>&1; then
+      curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+    fi
+  args:
+    executable: /bin/bash
+
+- name: Ensure kubectl exists (optional)
+  become: yes
+  shell: |
+    set -e
+    if ! command -v kubectl >/dev/null 2>&1; then
+      apt-get update && apt-get install -y kubectl
+    fi
+  args:
+    executable: /bin/bash
