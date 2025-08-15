@@ -1,0 +1,25 @@
+global:
+  cloud: others
+  clusterName: "{{ cluster_name }}"
+  deploymentEnvironment: "{{ deployment_environment }}"
+
+otelCollectorEndpoint: "{{ signoz_otlp_endpoint }}"
+otelInsecure: {{ signoz_otlp_insecure | lower }}
+
+presets:
+  otlpExporter:
+    enabled: true
+  loggingExporter:
+    enabled: false
+  hostMetrics:
+    enabled: true
+  kubeletMetrics:
+    enabled: true
+  clusterMetrics:
+    enabled: true
+  logsCollection:
+    enabled: true
+  kubernetesAttributes:
+    enabled: true
+  k8sEvents:
+    enabled: true
