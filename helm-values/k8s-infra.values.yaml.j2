@@ -1,0 +1,30 @@
+# This override configures the k8s-infra chart to export *out of the cluster* to SigNoz running
+# in Docker on your TrueNAS host via OTLP gRPC (4317) without TLS.
+#
+# App traces can go to the node-local OtelAgent (hostPort 4317) deployed by this chart.
+# See: env vars in k8s/rolldice/deployment.yaml
+global:
+  cloud: others
+  clusterName: "{{ cluster_name }}"
+  deploymentEnvironment: "{{ deployment_environment }}"
+
+# Upstream SigNoz endpoint (TrueNAS)
+otelCollectorEndpoint: "{{ truenas_ip }}:{{ otlp_grpc_port }}"
+otelInsecure: true
+
+# Common presets – tweak as needed
+presets:
+  otlpExporter:
+    enabled: true
+  hostMetrics:
+    enabled: true
+  kubeletMetrics:
+    enabled: true
+  kubernetesAttributes:
+    enabled: true
+  clusterMetrics:
+    enabled: true
+  logsCollection:
+    enabled: true
+  k8sEvents:
+    enabled: true

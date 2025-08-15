@@ -1,0 +1,26 @@
+---
+- name: Uninstall k8s-infra and remove rolldice
+  hosts: local
+  gather_facts: false
+
+  vars_files:
+    - group_vars/all.yml
+
+  tasks:
+    - name: Remove rolldice app
+      ansible.builtin.shell: |
+        set -e
+        kubectl delete -n {{ app_ns }} -f ../k8s/rolldice/ --ignore-not-found=true
+      args:
+        executable: /bin/bash
+
+    - name: Uninstall k8s-infra chart
+      ansible.builtin.shell: |
+        set -e
+        helm uninstall {{ release_name }} -n {{ ns }} || true
+      args:
+        executable: /bin/bash
+
+    - name: Optionally delete namespaces (disabled by default)
+      ansible.builtin.debug:
+        msg: "If you want to delete namespaces too: kubectl delete ns {{ ns }} {{ app_ns }}"
